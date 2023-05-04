@@ -59,6 +59,39 @@ def puis(L, n):
     else: #Si les paramètres ne sont pas valides.
         print("Erreur, vos paramètres ne sont pas une liste et un entier.")
 
+#1.2.3 : On ne peut pas faire de fonction calculant l'étoile d'un langage car pour un langage infini ou très grand, on ne peut pas liser toutes les concaténations. Pour pouvoir faire une fonction de la sorte, il faudrait des algorithmes sophistiqués car la fonction nécessite des ensembles qui ne peuvent pas être stockés en mémoire et le calcul peut être très coûteux en temps de calcul.
+
+def defauto():
+    auto = {} #Initialisation du dictionnaire qui forme l'automate.
+    alphabet = set(input("Entrez l'alphabet de l'automate, chaque lettres étant séparé par des espaces : ").split())
+    auto['alphabet'] = sorted(list(alphabet))
+    etats = set(input("Entrez les états de l'automate, chaque états étant séparés par des espaces : ").split())
+    auto["etats"] = sorted(list(etats))
+    auto["transitions"] = [] #Initialisation de la liste contenant les transitions.
+    
+    while True: #Pour pouvoir entrer autant de transitions que l'on souhaite
+        transition = input("Entrez une transition sous la forme 'etat_depart étiquette etat_arrivee', ou appuyez sur Entrée pour terminer : ")
+        if not transition:
+            break #Pour sortir de la boucle une fois que l'utilisateur appuie sur Entrée sans avoir rien écrit
+        transition = transition.split() 
+        if len(transition) != 3: #Si la transition ne contient par 3 élements
+            print("Erreur, la transition doit être de la forme 'etat_depart étiquette etat_arrivee'")
+            continue
+        etat_depart, etiquette, etat_arrivee = transition
+        if etat_depart not in auto["etats"] or etat_arrivee not in auto["etats"]: #Si au moins l'un des états n'est pas dans les états de l'automate.
+            print("Erreur, les états de la transition doivent appartenir à l'ensemble des états de l'automate")
+            continue
+        if etiquette not in auto["alphabet"]: #Si l'étiquette n'est pas dans l'alphabet de l'automate.
+            print("Erreur, l'étiquette de la transition doit appartenir à l'alphabet de l'automate !")
+            continue
+        auto["transitions"].append([etat_depart, etiquette, etat_arrivee])
+    
+    I = input("Entrez l'ensemble des états initiaux, séparés par des espaces : ").split()
+    auto["I"] = I
+    F = input("Entrez l'ensemble des états finaux, séparés par des espaces : ").split()
+    auto["F"] = F
+    return auto
+
 if __name__ == "__main__":
     print("Préfixe")
     print(pref('coucou'))
@@ -73,4 +106,5 @@ if __name__ == "__main__":
     print(concatene(L1,L2))
     L1=['aa','ab','ba','bb']
     print(puis(L1,2))
-    
+    auto0 = defauto()
+    print(auto0)
