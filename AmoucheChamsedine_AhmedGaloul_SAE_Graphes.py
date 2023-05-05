@@ -59,7 +59,15 @@ def puis(L, n):
     else: #Si les paramètres ne sont pas valides.
         print("Erreur, vos paramètres ne sont pas une liste et un entier.")
 
-#1.2.3 : On ne peut pas faire de fonction calculant l'étoile d'un langage car pour un langage infini ou très grand, on ne peut pas liser toutes les concaténations. Pour pouvoir faire une fonction de la sorte, il faudrait des algorithmes sophistiqués car la fonction nécessite des ensembles qui ne peuvent pas être stockés en mémoire et le calcul peut être très coûteux en temps de calcul.
+def tousmots(L, n):
+    if type(L) == list and type(n) == int: #Vérifie si les paramètres sont bien une liste et un entier
+        lst = ['']
+        for i in range(n):
+            lst += puis(L, i+1)
+        return lst
+
+    else: #Si les paramètres ne sont pas valides.
+        print("Erreur, vos paramètres ne sont pas une liste et un entier.")
 
 def defauto():
     auto = {} #Initialisation du dictionnaire qui forme l'automate.
@@ -92,6 +100,28 @@ def defauto():
     auto["F"] = F
     return auto
 
+def lirelettre(T, E, a):
+    lst_etats = []
+    for transition in T:
+        if transition[1] == a and transition[0] in E: # Si la lettre est a et que l'état de départ est dans E.
+            lst_etats.append(transition[2]) # Pour ajouter l'état d'arriver
+    return sorted(list(set(lst_etats))) # Pour renvoyer une liste triée et sans doublons
+
+def liremot(T, E, mot):
+    if mot == "":
+        return E
+    
+    # On prend les états pouvant être atteint en lisant la premiere lettre
+    etats_suivants = lirelettre(T, E, mot[0])
+    
+    # Si on a parcouru tout le mot, on renvoie les états atteints
+    if len(mot) == 1:
+        return etats_suivants
+    
+    # Sinon, on appelle récursivement la fonction en partant des états atteignables et en lisant le reste du mot
+    return liremot(T, etats_suivants, mot[1:])
+
+
 if __name__ == "__main__":
     print("Préfixe")
     print(pref('coucou'))
@@ -102,9 +132,18 @@ if __name__ == "__main__":
     print("\n Miroir")
     print(miroir('coucou'))
     L1=['aa','ab','ba','bb']
-    L2=['a', 'b', '']
+    L2=['a', 'b']
     print(concatene(L1,L2))
     L1=['aa','ab','ba','bb']
     print(puis(L1,2))
-    auto0 = defauto()
-    print(auto0)
+    print("\n Tous Mots")
+    print(tousmots(L2, 3))
+
+    auto ={"alphabet":['a','b'],"etats": [1,2,3,4],
+    "transitions":[[1,'a',2],[2,'a',2],[2,'b',3],[3,'a',4]],
+    "I":[1],"F":[4]}
+
+    print(lirelettre(auto["transitions"],auto["etats"],'a'))
+    print(liremot(auto["transitions"],auto["etats"],'aba'))
+    
+    
