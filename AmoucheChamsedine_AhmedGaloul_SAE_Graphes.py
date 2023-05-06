@@ -1,37 +1,93 @@
 def pref(u):
-    if type(u) == str: # Vérifie si le paramètre est une chaîne de caractère.
+    """
+    Cette fonction prend une chaîne de caractère en paramètre et renvoie une liste contenant tous les préfixes de la chaîne.
+    Si le paramètre n'est pas une chaîne de caractère, la fonction affiche un message d'erreur.
+
+    Args:
+        u (str): une chaîne de caractère
+
+    Returns:
+        list: une liste contenant tous les préfixes de la chaîne
+    """
+    if type(u) == str:
         longueur = len(u)
         lst_pref = [u[:i] for i in range(longueur + 1)]
         return lst_pref
-    else: # Si u n'est pas une chaine alors on affiche une erreur
+    else:
         print("Erreur, le paramètre n'est pas une chaîne de caractère.")
+
 
 def suf(u):
-    if type(u) == str: # Vérifie si le paramètre est une chaîne de caractère.
+    """
+    Cette fonction prend une chaîne de caractère en paramètre et renvoie une liste contenant tous les suffixes de la chaîne.
+    Si le paramètre n'est pas une chaîne de caractère, la fonction affiche un message d'erreur.
+
+    Args:
+        u (str): une chaîne de caractère
+
+    Returns:
+        list: une liste contenant tous les suffixes de la chaîne
+    """
+    if type(u) == str:
         lst = []
         for i in range(len(u)+1):
-            lst.append(u[i:len(u)]) # slice qui permet d'ajouter les suffixe en enlenvant une lettre a chaque fois
+            lst.append(u[i:len(u)])
         return lst
-    else: # Si u n'est pas une chaine alors on affiche une erreur
+    else:
         print("Erreur, le paramètre n'est pas une chaîne de caractère.")
+
 
 def fact(u):
-    if type(u) == str: # Vérifie si le paramètre est une chaîne de caractère.
-        facteurs = set() # Set pour éviter les doublons
+    """
+    Cette fonction prend une chaîne de caractère en paramètre et renvoie une liste contenant tous les facteurs de la chaîne.
+    Si le paramètre n'est pas une chaîne de caractère, la fonction affiche un message d'erreur.
+
+    Args:
+        u (str): une chaîne de caractère
+
+    Returns:
+        list: une liste contenant tous les facteurs de la chaîne, triée par ordre alphabétique
+    """
+    if type(u) == str:
+        facteurs = set()
         for i in range(len(u)):
             for j in range(i, len(u)+1):
-                facteurs.add(u[i:j]) # ajoute la sous-chaîne de u allant de i à j inclus dans facteurs
+                facteurs.add(u[i:j])
         return sorted(list(facteurs))
-    else :# Si u n'est pas une chaine alors on affiche une erreur
+    else:
         print("Erreur, le paramètre n'est pas une chaîne de caractère.")
 
+
 def miroir(u):
-    if type(u) == str : #Vérifie si le paramètre est une chaîne de cractère.
-        return u[::-1] #Renverse l'ordre des caractères
-    else: #Si le paramètre n'est pas uen chaîne de caractère.
-        print("Erreur, le paramètre n'est pas une chaîne de cractère.")
+    """
+    Cette fonction prend une chaîne de caractère en paramètre et renvoie la chaîne renversée.
+    Si le paramètre n'est pas une chaîne de caractère, la fonction affiche un message d'erreur.
+
+    Args:
+        u (str): une chaîne de caractère
+
+    Returns:
+        str: la chaîne renversée
+    """
+    if type(u) == str:
+        return u[::-1]
+    else:
+        print("Erreur, le paramètre n'est pas une chaîne de caractère.")
+
         
 def concatene(L1, L2):
+    """
+    Cette fonction prend en entrée deux listes de chaînes de caractères et renvoie toutes les
+    concaténations possibles entre les éléments de ces deux listes. Si les deux listes ne sont pas
+    valides, un message d'erreur sera affiché.
+    
+    Args:
+    - L1 (list): La première liste de chaînes de caractères
+    - L2 (list): La deuxième liste de chaînes de caractères
+    
+    Returns:
+    - lst_concatene (list): La liste de toutes les concaténations possibles entre les deux listes.
+    """
     if type(L1) == list and type(L2) == list: #Vérifie si les paramètres sont bien des listes.
         lst_concatene = [] #Initialisation de la liste contenant la concaténation.
         for element1 in L1: #On parcourt les élements de L1.
@@ -44,6 +100,19 @@ def concatene(L1, L2):
         print("Erreur, vos paramètres ne sont pas des listes.")
 
 def puis(L, n):
+    """
+    Cette fonction prend en entrée une liste de chaînes de caractères et un entier n et renvoie
+    toutes les chaînes de caractères obtenues en concaténant des éléments de la liste L n fois. Si
+    les arguments ne sont pas valides, un message d'erreur sera affiché.
+    
+    Args:
+    - L (list): La liste de chaînes de caractères à élever à la puissance n
+    - n (int): La puissance à laquelle élever la liste L
+    
+    Returns:
+    - L_puis (list): La liste de toutes les chaînes de caractères obtenues en concaténant des
+    éléments de la liste L n fois.
+    """
     if type(L) == list and type(n) == int: #Vérifie si les paramètres sont bien une liste et un entier
         L_puis = []
         if n == 0: #Puissance 0 donc on renvoit ''
@@ -62,6 +131,20 @@ def puis(L, n):
 #1.2.3 Il est possible de définir une fonction qui calcule l'étoile d'un langage en théorie, mais il n'est pas possible de la faire pour tous les langages en pratique. Dans certains cas, il ne sera pas possible de lister explicitement toutes les concaténations possibles.
 
 def tousmots(L, n):
+    """
+    Cette fonction prend en entrée une liste de chaînes de caractères et un entier n et renvoie
+    toutes les chaînes de caractères qui peuvent être obtenues en concaténant des éléments de la
+    liste L entre 1 et n fois. Si les arguments ne sont pas valides, un message d'erreur sera
+    affiché.
+
+    Args:
+    - L (list): La liste de chaînes de caractères à utiliser pour former les mots.
+    - n (int): Le nombre maximal de fois que l'on peut concaténer les chaînes de caractères de la liste L.
+
+    Returns:
+    - lst (list): La liste de toutes les chaînes de caractères obtenues en concaténant des éléments
+    de la liste L entre 1 et n fois.
+    """
     if type(L) == list and type(n) == int: #Vérifie si les paramètres sont bien une liste et un entier
         lst = ['']
         for i in range(n):
@@ -72,6 +155,20 @@ def tousmots(L, n):
         print("Erreur, vos paramètres ne sont pas une liste et un entier.")
 
 def defauto():
+    """
+    Fonction permettant à l'utilisateur de définir un automate.
+    Cette fonction demande à l'utilisateur de saisir l'alphabet, les états, les transitions, les états initiaux
+    et les états finaux de l'automate.
+    La fonction renvoie le dictionnaire représentant l'automate ainsi créé, avec les clés "alphabet", "etats",
+    "transitions", "I" et "F".
+    Args:
+    - L (list): La liste de chaînes de caractères à utiliser pour former les mots.
+    - n (int): Le nombre maximal de fois que l'on peut concaténer les chaînes de caractères de la liste L.
+
+    Returns:
+    - lst (list): La liste de toutes les chaînes de caractères obtenues en concaténant des éléments
+    de la liste L entre 1 et n fois.
+    """
     auto = {} #Initialisation du dictionnaire qui forme l'automate.
     alphabet = set(input("Entrez l'alphabet de l'automate, chaque lettres étant séparé par des espaces : ").split())
     auto['alphabet'] = sorted(list(alphabet))
@@ -103,6 +200,18 @@ def defauto():
     return auto
 
 def lirelettre(T, E, a):
+    """
+    Fonction qui prend en entrée une liste de transitions T, un ensemble d'états E et une lettre a.
+    Elle renvoie l'ensemble des états atteignables depuis E en lisant la lettre a.
+    
+    Args:
+    - T: Une liste de transitions de l'automate. Chaque transition est une liste de trois éléments: l'état de départ, l'étiquette et l'état d'arrivée.
+    - E: Une liste contenant les états de départ pour la lecture de la lettre.
+    - a: La lettre à lire.
+
+    Returns:
+    - Une liste contenant les états d'arrivée possibles en lisant la lettre a depuis les états de départ E.
+    """
     lst_etats = []
     for transition in T:
         if transition[1] == a and transition[0] in E: # Si la lettre est a et que l'état de départ est dans E.
@@ -110,6 +219,17 @@ def lirelettre(T, E, a):
     return sorted(list(set(lst_etats))) # Pour renvoyer une liste triée et sans doublons
 
 def liremot(T, E, mot):
+    """
+    Cette fonction renvoie une liste contenant les états d'arrivée possibles en lisant un mot donné depuis un ensemble d'états donné.
+    
+    Args:
+        - T: Une liste de transitions de l'automate. Chaque transition est une liste de trois éléments: l'état de départ, l'étiquette et l'état d'arrivée.
+        - E: Une liste contenant les états de départ pour la lecture du mot.
+        - mot: Le mot à lire.
+        
+    Returns:
+        - Une liste contenant les états d'arrivée possibles en lisant le mot mot depuis les états de départ E.
+    """
     if mot == "":
         return E
     
@@ -124,6 +244,16 @@ def liremot(T, E, mot):
     return liremot(T, etats_suivants, mot[1:])
 
 def accepte(auto ,mot):
+    """
+    Vérifie si l'automate reconnaît le mot donné en entrée.
+
+    Args:
+        auto (dict): Dictionnaire représentant l'automate.
+        mot (str): Mot dont on veut vérifier la reconnaissance par l'automate.
+
+    Returns:
+        bool: True si le mot est reconnu par l'automate, False sinon.
+    """
     # On enregistre la liste des mots pouvant être lu par l'état initial
     lst = liremot(auto["transitions"], auto["I"], mot)
     present = False
@@ -137,6 +267,16 @@ def accepte(auto ,mot):
 
 
 def langage_accept(auto, n):
+    """
+    Renvoie la liste des mots de longueur n reconnus par l'automate.
+    
+    Args:
+        auto (dict): Dictionnaire représentant l'automate.
+        n (int): Longueur des mots à considérer.
+    
+    Returns:
+        list: Liste des mots de longueur n reconnus par l'automate.
+    """
     lst_langage_accept = [] #Initialisation de la liste des mots acceptés
     lst_tousmots = tousmots(auto['alphabet'], n) #On stocke tous les mots que l'alphabet permet de crée avec une longueur inférieur à n.
     for mot in lst_tousmots: #On parcourt cette liste.
@@ -147,6 +287,15 @@ def langage_accept(auto, n):
 #1.3.6 On ne peut  pas faire une fonction qui renvoie le langage accepté par un automate car il faudrait donner la liste de tous les mots accepté et cette liste peut être longue voir infinie
 
 def deterministe(auto):
+    """
+       Vérifie si l'automate est déterministe.
+    
+       Args:
+           auto (dict): Dictionnaire représentant l'automate.
+    
+       Returns:
+           bool: True si l'automate est déterministe, False sinon.
+   """
     if len(auto['I']) > 1: #Si l'automate possède plus d'un état initial, alors il n'est pas déterministe.
         return False
     else:
@@ -162,6 +311,19 @@ def deterministe(auto):
     return True #Si on ne tombe jamais sur le cas du dessus, on retourne True
 
 def trouver_etat_determinise(auto):
+    """
+    Fonction qui prend en entrée un automate non-déterministe et retourne la liste des états de l'automate déterminisé.
+
+    Args:
+        auto (dict): automate non-déterministe sous forme d'un dictionnaire contenant:
+            - "alphabet": l'alphabet de l'automate (liste de caractères).
+            - "transitions": les transitions de l'automate (liste de tuples (e1, a, e2) où e1 et e2 sont des ensembles d'états et a est un caractère).
+            - "I": l'ensemble des états initiaux (liste d'états).
+            - "F": l'ensemble des états finaux (liste d'états).
+
+    Returns:
+        list: la liste des états de l'automate déterminisé.
+    """
     etats_determinises = [] #Liste qui stockera les nouveaux états déterminisés
     alphabet = auto['alphabet']
     transitions = auto['transitions']
@@ -179,6 +341,16 @@ def trouver_etat_determinise(auto):
     return etats_determinises #On retourne la liste
 
 def trouver_transitions_determinise(auto, etats):
+    """
+    Trouve les nouvelles transitions pour un automate déterminisé.
+    
+    Args:
+    - auto (dict): un automate non-déterminisé sous forme d'un dictionnaire.
+    - etats (list): une liste d'états pour l'automate déterminisé.
+    
+    Returns:
+    - nouvelles_transitions (list): une liste contenant les nouvelles transitions sous forme de listes d'états et de lettre.
+    """
     nouvelles_transitions = [] #liste contenant les nouvelles transitions
     for e in etats: #On parcourt les nouveaux etats
         for a in auto['alphabet']: #On parcourt chaque lettre
@@ -190,12 +362,33 @@ def trouver_transitions_determinise(auto, etats):
     return nouvelles_transitions #On retourne la liste contenant les nouvelles transitions
             
 def trouver_etats_initiaux_determinise(auto):
+    """
+    Cette fonction prend en entrée un automate non déterministe et retourne une liste contenant les nouveaux états initiaux
+    de l'automate déterminisé.
+    
+    Args:
+        auto (dict): l'automate non déterministe
+        
+    Returns:
+        list: une liste contenant les nouveaux états initiaux de l'automate déterminisé.
+    """
     #Initialise la liste des nouveaux etats initiaux
     etats_initiaux_determinise = []
     etats_initiaux_determinise.append(auto['I']) 
     return etats_initiaux_determinise #On retourne la liste des nouveaux etats initiaux
     
 def trouver_etats_finaux_determinise(auto, etats):
+    """
+    Cette fonction prend en entrée un automate non déterministe et une liste d'états de l'automate déterminisé,
+    et retourne une liste contenant les nouveaux états finaux de l'automate déterminisé.
+    
+    Args:
+        auto (dict): l'automate non déterministe
+        etats (list): une liste d'états de l'automate déterminisé
+        
+    Returns:
+        list: une liste contenant les nouveaux états finaux de l'automate déterminisé.
+    """
     etats_finaux = auto['F'] 
     nouveaux_etats_finaux = [] #Initialise la liste des nouveaux etats finaux
     for e in etats: #On parcourt les etats
@@ -204,6 +397,15 @@ def trouver_etats_finaux_determinise(auto, etats):
     return nouveaux_etats_finaux #On retourne la liste des nouveaux etats finaux
 
 def determinise(auto):
+    """
+    Cette fonction prend en entrée un automate non déterministe et retourne l'automate déterminisé.
+    
+    Args:
+        auto (dict): l'automate non déterministe
+        
+    Returns:
+        dict: l'automate déterminisé.
+    """
     if deterministe(auto):
         return auto
     else:
@@ -226,6 +428,15 @@ def determinise(auto):
         return auto_determinise #On retourne l'automate déterminisé
 
 def renommage(auto):
+    """
+    Renomme les états d'un automate en les remplaçant par les plus petits entiers positifs disponibles.
+    
+    Args:
+    - auto (dict): un automate sous forme d'un dictionnaire.
+    
+    Returns:
+    - auto (dict): l'automate avec les états renommés.
+    """
     com = 0
     chaine = str(auto) # On remet l'automate sous forme de chaine
     for i in range(len(auto['etats'])):
@@ -355,95 +566,152 @@ def difference(auto1, auto2):
         
         return auto_difference
     
-
-def prefixe(automate):
+def est_emonde(auto):
     """
-    Cette fonction prend en entrée un automate émondé et renvoie un automate
-    qui accepte l'ensemble des préfixes des mots acceptés par l'automate
-    d'entrée.
+    Vérifie si un automate fini déterministe est un automate émondé.
+    
+    Un automate est émondé s'il satisfait les conditions suivantes:
+
+    Args:
+        auto (dict): Un dictionnaire représentant l'automate fini déterministe.
+
+    Returns:
+        bool: True si l'automate est émondé, False sinon.
     """
-    # On copie l'automate d'entrée et on rajoute un nouvel état initial.
-    nouvel_automate = automate.copy()
-    nouvel_automate['etats'].append('q')
-    nouvel_automate['I'] = ['q']
-
-    # On crée les transitions pour tous les états finaux de l'automate
-    # d'entrée vers le nouvel état initial.
-    for etat in nouvel_automate['F']:
-        nouvel_automate['transitions'].append((etat, '', 'q'))
-
-    return nouvel_automate
+    # Vérifier que tous les états ont au plus une transition pour chaque symbole de l'alphabet.
+    for etat in auto["etats"]:
+        transitions_etat = [t for t in auto["transitions"] if t[0] == etat]
+        symboles_transitions = set([t[1] for t in transitions_etat])
+        if len(symboles_transitions) != len(auto["alphabet"]):
+            return False
+    return True
 
 
-def suffixe(automate):
+
+def prefixe(auto):
     """
-    Cette fonction prend en entrée un automate émondé et renvoie un automate
-    qui accepte l'ensemble des suffixes des mots acceptés par l'automate
-    d'entrée.
+    Modifie l'automate pour qu'il accepte les préfixes de tous les mots du langage qu'il acceptait initialement.
+    Marque tous les états de l'automate comme états finaux.
+
+    Args:
+        auto (dict): l'automate à modifier.
+
+    Returns:
+        dict: l'automate modifié.
     """
-    # On copie l'automate d'entrée et on rajoute un nouvel état final.
-    nouvel_automate = automate.copy()
-    nouvel_automate['etats'].append('q')
-    nouvel_automate['F'] = ['q']
+    if not est_emonde(auto):
+        print("L'automate n'est pas émondé.")
+        return None
 
-    # On crée les transitions pour tous les états initiaux de l'automate
-    # d'entrée vers le nouvel état final.
-    for etat in nouvel_automate['I']:
-        nouvel_automate['transitions'].append(('q', '', etat))
-
-    return nouvel_automate
+    auto["F"] = auto["etats"]
+    return auto
 
 
-def facteur(automate):
+def suffixe(auto):
     """
-    Cette fonction prend en entrée un automate émondé et renvoie un automate
-    qui accepte l'ensemble des facteurs des mots acceptés par l'automate
-    d'entrée.
+    Modifie l'automate pour qu'il accepte les suffixes de tous les mots du langage qu'il acceptait initialement.
+    Marque tous les états de l'automate comme états initiaux.
+
+    Args:
+        auto (dict): l'automate à modifier.
+
+    Returns:
+        dict: l'automate modifié.
     """
-    # On copie l'automate d'entrée et on rajoute un nouvel état initial et
-    # final.
-    nouvel_automate = automate.copy()
-    nouvel_automate['etats'].append('q')
-    nouvel_automate['etats'].append('r')
-    nouvel_automate['I'] = ['q']
-    nouvel_automate['F'] = ['r']
+    if not est_emonde(auto):
+        print("L'automate n'est pas émondé.")
+        return None
 
-    # On crée les transitions pour tous les états finaux de l'automate
-    # d'entrée vers le nouvel état final.
-    for etat in nouvel_automate['F']:
-        nouvel_automate['transitions'].append((etat, '', 'r'))
-
-    # On crée les transitions pour tous les états initiaux de l'automate
-    # d'entrée vers le nouvel état initial.
-    for etat in nouvel_automate['I']:
-        nouvel_automate['transitions'].append(('q', '', etat))
-
-    return nouvel_automate
+    auto["I"] = auto["etats"]
+    return auto
 
 
+def facteur(auto):
+    """
+    Modifie l'automate pour qu'il accepte les facteurs de tous les mots du langage qu'il acceptait initialement.
+    Marque tous les états de l'automate comme états initiaux et finaux.
+
+    Args:
+        auto (dict): l'automate à modifier.
+
+    Returns:
+        dict: l'automate modifié.
+    """
+    if not est_emonde(auto):
+        print("L'automate n'est pas émondé.")
+        return None
+
+    auto["I"] = auto["etats"]
+    auto["F"] = auto["etats"]
+    return auto
+
+
+def miroir_auto(auto):
+    """
+    Modifie l'automate pour obtenir son automate miroir, c'est-à-dire un automate qui accepte le langage miroir du langage
+    qu'il acceptait initialement. Inverse les flèches de l'automate et inverse les états finaux et initiaux.
+
+    Args:
+        auto (dict): l'automate à modifier.
+
+    Returns:
+        dict: l'automate miroir.
+    """
+    if not est_emonde(auto):
+        print("L'automate n'est pas émondé.")
+        return None
+
+    transitions = [[t[2], t[1], t[0]] for t in auto["transitions"]]
+    auto["transitions"] = transitions
+    auto["I"], auto["F"] = auto["F"], auto["I"]
+    return auto
 
 def etats_equivalents(auto, etat1, etat2):
+    """Détermine si deux états sont équivalents dans un automate donné.
+
+    Args:
+        auto (dict): un automate représenté par un dictionnaire.
+        etat1 (str): le nom du premier état.
+        etat2 (str): le nom du deuxième état.
+
+    Returns:
+        bool: True si les deux états sont équivalents, False sinon.
+    """
     pile = [(etat1, etat2)]
     visite = set()
     while pile:
         e1, e2 = pile.pop()
         if (e1 in auto["F"]) != (e2 in auto["F"]):
+            # Si les deux états n'ont pas le même statut final, ils ne sont pas équivalents
             return False
         if (e1 in auto["I"]) != (e2 in auto["I"]):
+            # Si les deux états n'ont pas le même statut initial, ils ne sont pas équivalents
             return False
         if (e1, e2) in visite:
+            # Si on a déjà visité ces deux états, on passe au prochain couple
             continue
         visite.add((e1, e2))
         for symbole in auto["alphabet"]:
             transitions1 = lirelettre(auto["transitions"], [e1], symbole)
             transitions2 = lirelettre(auto["transitions"], [e2], symbole)
             if len(transitions1) != len(transitions2):
+                # Si les deux états n'ont pas le même nombre de transitions sortantes pour un symbole donné,
+                # ils ne sont pas équivalents
                 return False
             pile += [(nouvel_etat1, nouvel_etat2) for nouvel_etat1, nouvel_etat2 in zip(transitions1, transitions2)]
+    # Si on a parcouru tous les chemins possibles sans trouver de différence, les deux états sont équivalents
     return True
 
 
 def regrouper_etats_equivalents(auto):
+    """Regroupe les états équivalents dans un automate donné.
+
+    Args:
+        auto (dict): un automate représenté par un dictionnaire.
+
+    Returns:
+        list: une liste de groupes d'états équivalents.
+    """
     groupes = []
     
     # Parcours de chaque état de l'automate
@@ -463,20 +731,55 @@ def regrouper_etats_equivalents(auto):
     return groupes
 
 def determiner_transitions(auto):
-    transitions = []
+    """
+    Détermine les transitions possibles pour un automate donné.
+
+    args: 
+        auto : dict
+
+    returns: 
+        list
+            La liste des transitions possibles pour l'automate donné. Chaque transition est représentée par un tuple
+            (état de départ, lettre, état d'arrivée).
+
+    """
+    # On commence par regrouper les états équivalents
     groupes = regrouper_etats_equivalents(auto)
+    
+    # On parcourt chaque groupe d'états
+    transitions = []
     for groupe in groupes:
+        
+        # Pour chaque lettre de l'alphabet, on détermine les états d'arrivée possibles
         for a in auto["alphabet"]:
             etats_arrivee = lirelettre(auto["transitions"], groupe, a)
+            
+            # Pour chaque groupe d'états, on vérifie si les états d'arrivée possibles sont inclus dans ce groupe
             for groupe_dest in groupes:
                 if set(etats_arrivee) <= set(groupe_dest):
+                    # Si c'est le cas, on ajoute la transition correspondante à la liste des transitions possibles
                     transitions.append((groupe, a, groupe_dest))
                     break
+    
+    # On renvoie la liste des transitions possibles
     return transitions
 
 
+
 def minimise(auto):
+    """Minimise un automate donné en regroupant les états équivalents.
+
+    Args:
+        auto (dict): un automate représenté par un dictionnaire.
+
+    Returns:
+        dict: un automate minimisé représenté par un dictionnaire.
+    """
+    if not deterministe(auto) :
+        auto = renommage( determinise(auto))
     # Regroupement des états équivalents
+    if not complet(auto) :
+        auto = complete(auto)
     groupes = regrouper_etats_equivalents(auto)
     
     # On détermine les transitions de l'atomate équivalent
@@ -504,9 +807,6 @@ def minimise(auto):
     
     return auto_min
 
-
-
-                     
 
 if __name__ == "__main__":
     print("Préfixe :")
@@ -585,19 +885,33 @@ if __name__ == "__main__":
     print("\ninter & renommage:")
     print(renommage(inter(auto4,auto5)))
     
+    auto_emonde = {"alphabet": ['0', '1'],
+               "etats": [0, 3],
+               "transitions": [[0, '0', 0], [0, '1', 3], [3, '0', 3], [3, '1', 3]],
+               "I": [0],
+               "F": [3]}
+    
+    print("\nPréfixe (émondé):")
+    print(prefixe(auto_emonde))
+    print("\nSuffixe (émondé):")
+    print(suffixe(auto_emonde))
+    print("\nFacteur (émondé):")
+    print(facteur(auto_emonde))
+    print("\nMiroir (émondé):")
+    print(miroir_auto(auto_emonde))
+    
     print("\ndifference :")
     print(difference(auto4,auto5))
     print("\nrenommage & différence :")
     print(renommage(difference(auto4,auto5)))
     
-    auto6 ={"alphabet":['a','b'],"etats": [0,1,2,3,4,5],
-    "transitions":[[0,'a',4],[0,'b',3],[1,'a',5],[1,'b',5],[2,'a',5],[2,'b',2],[3,'a',1],[3,'b',0],
-    [4,'a',1],[4,'b',2],[5,'a',2],[5,'b',5]],
-    "I":[0],"F":[0,1,2,5]}
+    auto6 ={"alphabet":['a','b'],"etats": [0,1,2,3,4,5,6,7],
+    "transitions":[[0,'a',2],[0,'b',1],[1,'a',2],[1,'b',1],[2,'a',3],[2,'b',2],[3,'a',5],[3,'b',4],
+    [4,'a',5],[4,'b',4],[5,'a',6],[5,'b',5], [6, 'a', 5], [6, 'b', 7], [7, 'a', 5], [7, 'b', 7]],
+    "I":[0],"F":[0,3,4,6,7]}
 
     print("\n Minimisé Normal")
     print( minimise(auto6))
     
     print("\n Minimisé Renomé")
     print( renommage(minimise(auto6)))
-    
