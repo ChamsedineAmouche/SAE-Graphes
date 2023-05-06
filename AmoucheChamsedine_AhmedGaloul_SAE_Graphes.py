@@ -326,7 +326,6 @@ def inter(auto1, auto2):
         return auto_produit
 
 
-
 def difference(auto1, auto2):
     if not deterministe(auto1) or not deterministe(auto2):
         print("Erreur, au moins l'un des deux automates n'est pas déterministe.")
@@ -355,6 +354,159 @@ def difference(auto1, auto2):
         auto_difference['etats'] = sorted(auto_difference['etats'], key=lambda x: (x[1], x[0]))
         
         return auto_difference
+    
+
+def prefixe(automate):
+    """
+    Cette fonction prend en entrée un automate émondé et renvoie un automate
+    qui accepte l'ensemble des préfixes des mots acceptés par l'automate
+    d'entrée.
+    """
+    # On copie l'automate d'entrée et on rajoute un nouvel état initial.
+    nouvel_automate = automate.copy()
+    nouvel_automate['etats'].append('q')
+    nouvel_automate['I'] = ['q']
+
+    # On crée les transitions pour tous les états finaux de l'automate
+    # d'entrée vers le nouvel état initial.
+    for etat in nouvel_automate['F']:
+        nouvel_automate['transitions'].append((etat, '', 'q'))
+
+    return nouvel_automate
+
+
+def suffixe(automate):
+    """
+    Cette fonction prend en entrée un automate émondé et renvoie un automate
+    qui accepte l'ensemble des suffixes des mots acceptés par l'automate
+    d'entrée.
+    """
+    # On copie l'automate d'entrée et on rajoute un nouvel état final.
+    nouvel_automate = automate.copy()
+    nouvel_automate['etats'].append('q')
+    nouvel_automate['F'] = ['q']
+
+    # On crée les transitions pour tous les états initiaux de l'automate
+    # d'entrée vers le nouvel état final.
+    for etat in nouvel_automate['I']:
+        nouvel_automate['transitions'].append(('q', '', etat))
+
+    return nouvel_automate
+
+
+def facteur(automate):
+    """
+    Cette fonction prend en entrée un automate émondé et renvoie un automate
+    qui accepte l'ensemble des facteurs des mots acceptés par l'automate
+    d'entrée.
+    """
+    # On copie l'automate d'entrée et on rajoute un nouvel état initial et
+    # final.
+    nouvel_automate = automate.copy()
+    nouvel_automate['etats'].append('q')
+    nouvel_automate['etats'].append('r')
+    nouvel_automate['I'] = ['q']
+    nouvel_automate['F'] = ['r']
+
+    # On crée les transitions pour tous les états finaux de l'automate
+    # d'entrée vers le nouvel état final.
+    for etat in nouvel_automate['F']:
+        nouvel_automate['transitions'].append((etat, '', 'r'))
+
+    # On crée les transitions pour tous les états initiaux de l'automate
+    # d'entrée vers le nouvel état initial.
+    for etat in nouvel_automate['I']:
+        nouvel_automate['transitions'].append(('q', '', etat))
+
+    return nouvel_automate
+
+
+
+def etats_equivalents(auto, etat1, etat2):
+    pile = [(etat1, etat2)]
+    visite = set()
+    while pile:
+        e1, e2 = pile.pop()
+        if (e1 in auto["F"]) != (e2 in auto["F"]):
+            return False
+        if (e1 in auto["I"]) != (e2 in auto["I"]):
+            return False
+        if (e1, e2) in visite:
+            continue
+        visite.add((e1, e2))
+        for symbole in auto["alphabet"]:
+            transitions1 = lirelettre(auto["transitions"], [e1], symbole)
+            transitions2 = lirelettre(auto["transitions"], [e2], symbole)
+            if len(transitions1) != len(transitions2):
+                return False
+            pile += [(nouvel_etat1, nouvel_etat2) for nouvel_etat1, nouvel_etat2 in zip(transitions1, transitions2)]
+    return True
+
+
+def regrouper_etats_equivalents(auto):
+    groupes = []
+    
+    # Parcours de chaque état de l'automate
+    for etat in auto["etats"]:
+        # On recherche un groupe d'états déjà existant
+        groupe_exist = False
+        for groupe in groupes:
+            if etats_equivalents(auto, etat, groupe[0]):
+                groupe.append(etat)
+                groupe_exist = True
+                break
+        
+        # Si on ne trouve aucun groupe d'états déja existant alors on créer un nouveau groupe
+        if not groupe_exist:
+            groupes.append([etat])
+    
+    return groupes
+
+def determiner_transitions(auto):
+    transitions = []
+    groupes = regrouper_etats_equivalents(auto)
+    for groupe in groupes:
+        for a in auto["alphabet"]:
+            etats_arrivee = lirelettre(auto["transitions"], groupe, a)
+            for groupe_dest in groupes:
+                if set(etats_arrivee) <= set(groupe_dest):
+                    transitions.append((groupe, a, groupe_dest))
+                    break
+    return transitions
+
+
+def minimise(auto):
+    # Regroupement des états équivalents
+    groupes = regrouper_etats_equivalents(auto)
+    
+    # On détermine les transitions de l'atomate équivalent
+    transitions = determiner_transitions(auto)
+    
+    # On initialise l'automate minimisé
+    auto_min = {
+        "alphabet": auto["alphabet"],
+        "etats": groupes,
+        "transitions": [],
+        "I": [],
+        "F": [],
+    }
+    
+    # On parcour les transitions pour les ajouter à l'automate minimisé
+    for groupe_dep, a, groupe_dest in transitions:
+        auto_min["transitions"].append([groupe_dep, a, groupe_dest])
+    
+    # On recherche les etats initiaux et finaux de l'automate minimisé
+    for groupe in groupes:
+        if auto["I"][0] in groupe:
+            auto_min["I"].append(groupe)
+        if set(groupe) & set(auto["F"]):
+            auto_min["F"].append(groupe)
+    
+    return auto_min
+
+
+
+                     
 
 if __name__ == "__main__":
     print("Préfixe :")
@@ -437,3 +589,15 @@ if __name__ == "__main__":
     print(difference(auto4,auto5))
     print("\nrenommage & différence :")
     print(renommage(difference(auto4,auto5)))
+    
+    auto6 ={"alphabet":['a','b'],"etats": [0,1,2,3,4,5],
+    "transitions":[[0,'a',4],[0,'b',3],[1,'a',5],[1,'b',5],[2,'a',5],[2,'b',2],[3,'a',1],[3,'b',0],
+    [4,'a',1],[4,'b',2],[5,'a',2],[5,'b',5]],
+    "I":[0],"F":[0,1,2,5]}
+
+    print("\n Minimisé Normal")
+    print( minimise(auto6))
+    
+    print("\n Minimisé Renomé")
+    print( renommage(minimise(auto6)))
+    
